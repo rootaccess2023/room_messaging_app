@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    font-family: "Rubik Regular";
+}
+
+/* Custom Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@font-face {
+    font-family: "Neurial Grotesk Extrabold";
+    src: url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.eot");
+    src: url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/d64d62baa65f9a54725f8ca3183dec5b.svg#Neurial Grotesk Extrabold")format("svg");
+}
+
+@font-face {
+    font-family: "Rubik Regular";
+    src: url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.eot");
+    src: url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.svg#Rubik Regular")format("svg");
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 200;
+    src: url('https://fonts.gstatic.com/s/rubik/v19/iJWHBXyIfDnIV7Fqj1ScZjKORAM.woff2') format('woff2');
+}
