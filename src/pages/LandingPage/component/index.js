@@ -1,2 +1,5 @@
 export * from "./Navbar"
 export * from "./Navlist"
+export * from "./Product"
+export * from "./About"
+export * from "./Footer"
