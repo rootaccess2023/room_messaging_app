@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 
 export function Navlist({ link, name }) {
   return (
-    <li className=''>
-        <a href={link} className="block py-2 px-3 text-white text-xl rounded md:bg-transparent" aria-current="page">{name}</a>
+    <li className='cursor-pointer'>
+        <a href={link} className="py-2 px-3 text-white text-xl font-medium cursor-pointer rounded md:bg-transparent">{name}</a>
     </li>
   )
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export function Question({style, question, answer, link}) {
   return (
     <Link to={link}>
-    <h1 className={style} >{question} <span className="text-orange-500">{answer}</span></h1>
+    <h1 className={style} >{question} <span className="text-orange-500 hover:underline">{answer}</span></h1>
     </Link>
   )
 }

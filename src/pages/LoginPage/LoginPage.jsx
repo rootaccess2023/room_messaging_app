@@ -46,7 +46,7 @@ export function LoginPage() {
     };
 
     return (
-    <main className="h-screen flex justify-center items-center bg-orange-500">
+    <main className="h-screen flex justify-center items-center bg-orange-400">
         <div className="size-[30rem] bg-white rounded p-8">
             <LoginSignup />
             <Banner />

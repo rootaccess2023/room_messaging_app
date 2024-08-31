@@ -6,6 +6,10 @@
     font-family: "Rubik Regular";
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* Custom Fonts */
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
@@ -28,11 +32,4 @@
     url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.woff")format("woff"),
     url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.ttf")format("truetype"),
     url("https://db.onlinewebfonts.com/t/12ebda1683a1752df697faceda81d94e.svg#Rubik Regular")format("svg");
-}
-
-@font-face {
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: 200;
-    src: url('https://fonts.gstatic.com/s/rubik/v19/iJWHBXyIfDnIV7Fqj1ScZjKORAM.woff2') format('woff2');
 }

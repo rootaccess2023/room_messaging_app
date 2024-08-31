@@ -51,7 +51,7 @@ export function SignupPage() {
     }
 
     return (
-    <main className="h-screen flex justify-center items-center bg-orange-500">
+    <main className="h-screen flex justify-center items-center bg-orange-400">
         <div className="size-[30rem] bg-white rounded p-8">
             <SignupLogin />
             <form onSubmit={handleSubmit}  className="relative flex flex-col items-center gap-8">
