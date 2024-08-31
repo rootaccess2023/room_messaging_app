@@ -35,7 +35,7 @@ export function LoginPage() {
             if (response) {
                 console.log('Login Successful:', response);
                 toastSuccess('Login Successful!')
-                navigate("/")
+                navigate("/room")
             } else {
                 throw new Error('Login failed.');
             };

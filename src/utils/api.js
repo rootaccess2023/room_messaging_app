@@ -42,7 +42,7 @@ export const loginUser = async (userData) => {
             body: JSON.stringify(userData)
         });
 
-        const responseData = await response.json(); 
+        const responseData = await response.json();
 
         if (response.ok) {
             console.log('User created successfully');
