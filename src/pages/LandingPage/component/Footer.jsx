@@ -1,8 +1,9 @@
 import { faFacebookF, faGithub, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import {  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types';
 
-export function Footer() {
+export function Footer({ contactRef }) {
 
     const icons = [
         {
@@ -24,7 +25,8 @@ export function Footer() {
     ]
 
     return (
-        <footer id="contact" className="bg-orange-400">
+
+        <footer ref={contactRef} className="bg-orange-400">
             <div className="mx-auto w-full max-w-screen-xl py-6 lg:py-8">
                 <hr className="my-6 border-gray-200 sm:mx-auto  lg:my-8" />
                 <div className="sm:flex sm:items-center sm:justify-between">
@@ -43,4 +45,8 @@ export function Footer() {
             </div>
         </footer>
   )
+}
+
+Footer.propTypes = {
+    contactRef: PropTypes.func.isRequired
 }
