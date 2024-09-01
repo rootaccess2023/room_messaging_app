@@ -95,7 +95,7 @@ export function SignupPage() {
                     style="absolute right-[7.5rem] bottom-20"
                     question="Already a member?"
                     answer="Login"
-                    link="/login"
+                    link="/sign_in"
                 />
             </form>
         </div>
