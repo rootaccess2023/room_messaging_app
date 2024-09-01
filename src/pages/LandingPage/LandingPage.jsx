@@ -24,7 +24,7 @@ export function LandingPage() {
             <h1 className="text-9xl font-neurial-extrabold">Room</h1>
             <h2 className="text-4xl font-bold tracking-wide">Connect in Your Space</h2>
             <p className="text-xl font-rubik-light text-justify">Room brings conversations to life with a personal touch. Whether catching up with friends or brainstorming with colleagues, enjoy seamless messaging and intuitive features that make every chat feel just right.</p>
-            <Link to="/login">
+            <Link to="/sign_in">
             <button className="w-48 py-4 mt-4 bg-blue-500 font-light tracking-widest rounded">LOG IN</button>
             </Link>
           </div>
