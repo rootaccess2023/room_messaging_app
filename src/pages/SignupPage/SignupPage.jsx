@@ -3,6 +3,7 @@ import { Button, IconEye, Input, Question, SignupLogin } from "../../components"
 import { createUser } from "../../utils/api";
 import { ToastContainer } from 'react-toastify'
 import { toastError, toastSuccess } from "../../utils/toaster";
+import { useNavigate } from "react-router-dom";
 
 export function SignupPage() {
 
@@ -20,6 +21,8 @@ export function SignupPage() {
     const handlePasswordConfirmationType = () => {
         setPasswordConfirmationType(passwordConfirmationType === 'password' ? 'text' : 'password');
     };
+
+    const navigate = useNavigate()
 
     const handleInput = (e) => {
         const {name, value} = e.target;
@@ -41,6 +44,7 @@ export function SignupPage() {
                     password: "",
                     password_confirmation: ""
                 })
+                navigate("/room")
             } else {
                 throw new Error('Registration failed.');
             }
