@@ -1,16 +1,18 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function RoomNav({ activeTab, setActiveTab }) {
+export function RoomNav({ roomCount, activeTab, setActiveTab }) {
     const navlist = [
         {
-            title: "Messages"
-        },
-        {
-            title: "Rooms"
+            title: "Rooms",
+            count: `( ${roomCount} )`
         },
         {
             title: "Friends"
+        },
+        {
+            title: "Create",
+            count: ""
         },
     ];
 
@@ -39,7 +41,7 @@ export function RoomNav({ activeTab, setActiveTab }) {
                                         : "border-transparent hover:text-gray-600 hover:border-gray-300"
                                 }`}
                             >
-                                {list.title}
+                                {list.title} {list.count}
                             </li>
                         ))}
                     </ul>

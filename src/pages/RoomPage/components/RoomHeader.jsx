@@ -1,8 +1,13 @@
 import { faEllipsis, faShareNodes, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from 'prop-types';
+import { useEffect } from "react";
 
-export function RoomHeader({selectedUser}) {
+export function RoomHeader({ selectedRoom, selectedUser, activeTab }) {
+
+    useEffect(() => {
+        console.log(activeTab === "Rooms" ? selectedRoom : selectedUser);
+    }, [activeTab, selectedRoom, selectedUser]);
 
     const icon = [
         {
@@ -20,7 +25,9 @@ export function RoomHeader({selectedUser}) {
     <section className="flex items-center justify-between px-7 py-4 bg-slate-100 border-b">
         <div className="flex items-center gap-2">
             <div className="flex justify-center items-center font-semibold  text-white text-xl size-12 bg-blue-500 rounded-full"></div>
-            <h1 className="text-lg font-medium">{selectedUser}</h1>
+            <h1 className="text-lg font-medium">
+                {activeTab === "Rooms" ? selectedRoom : selectedUser}
+            </h1>
         </div>
         <div className="flex gap-4">
             {icon.map((item, index) => (
@@ -34,5 +41,7 @@ export function RoomHeader({selectedUser}) {
 }
 
 RoomHeader.propTypes = {
-    selectedUser: PropTypes.object
+    selectedRoom: PropTypes.string,
+    selectedUser: PropTypes.string,
+    activeTab: PropTypes.string.isRequired,
 }
