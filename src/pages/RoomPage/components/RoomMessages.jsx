@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function RoomMessages({ handleSelectedUser }) {
 
   const dmUsers = JSON.parse(localStorage.getItem('dmUsers')) || [];
@@ -18,4 +20,8 @@ export function RoomMessages({ handleSelectedUser }) {
       ))}
     </div>
   );
+}
+
+RoomMessages.propTypes = {
+  handleSelectedUser: PropTypes.func.isRequired
 }

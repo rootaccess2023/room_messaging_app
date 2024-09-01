@@ -1,5 +1,6 @@
 import { faEllipsis, faShareNodes, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import PropTypes from 'prop-types';
 
 export function RoomHeader({selectedUser}) {
 
@@ -30,4 +31,8 @@ export function RoomHeader({selectedUser}) {
         </div>
     </section>
   )
+}
+
+RoomHeader.propTypes = {
+    selectedUser: PropTypes.object
 }

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RoomConversation, RoomFooter, RoomFriends, RoomHeader, RoomMessages, RoomNav, RoomText } from "./components";
 import { RoomRooms } from "./components/RoomRooms";
 import { useFetch } from "../../utils/useFetch";
-import { getAllChannels, sendMessage } from "../../utils/api";
+import { getAllChannels, getReceiverMessage, sendMessage } from "../../utils/api";
 import { toastError, toastSuccess } from "../../utils/toaster";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export function RoomPage() {
     // Variables
@@ -20,18 +21,32 @@ export function RoomPage() {
               return <RoomMessages handleSelectedUser={handleSelectedUser} />
       }
     };
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     // useStates
     const [activeTab, setActiveTab] = useState("Message");
     const [allChannels, setAllChannel] = useState([]);
     const [selectedUser, setSelectedUser] = useState("");
     const [receiverId, setReceiverId] = useState("");
-    const [receiverClass, setReceiverClass] = useState("");
+    const [senderId, setSenderId] = useState("");
+    const [receiverClass, setReceiverClass] = useState("User");
     const [sendInput, setSendInput] = useState("");
+
+    // useRef
+    const messagesEndRef = useRef(null);
+
+    // useNavigate
+    const navigate = useNavigate();
+
+    // Destructuring from API.js
+    const {apiURL: receiverUrl, options: receiverOptions} = getReceiverMessage(receiverId, receiverClass);
 
     // useFetch (Custom Hook)
     const { data: allChannelData, error: allChannelError, getData: getAllRoom } = useFetch();
     const { getData: sendData} = useFetch();
+    const {data: receiverMessageData, error: receiverMessageError, getData: getReceiverMessageData} = useFetch();
 
     // useEffect
     useEffect(() => {
@@ -53,11 +68,45 @@ export function RoomPage() {
       }
     }, [allChannelData]);
 
+    useEffect(() => {
+      if(receiverId) {
+        getReceiverMessageData(receiverUrl, receiverOptions);
+      }
+    }, [receiverId])
+
+    useEffect(() => {
+      const loginData = JSON.parse(localStorage.getItem("loginData"));
+      if (loginData && loginData.data) {
+        setSenderId(loginData.data.id);
+      }
+    }, []);
+
+    useEffect(() => {
+      if (receiverMessageData) {
+          console.log("Fetched receiverMessageData:", receiverMessageData);
+      }
+  }, [receiverMessageData]);
+
+  useEffect(() => {
+    if (receiverMessageError) {
+      toastError('Error fetching received messages.');
+    }
+    if (receiverMessageData !== null) {
+      console.log('Received messages:', receiverMessageData.data);
+      scrollToBottom();
+    }
+  }, [receiverMessageData, receiverMessageError]);
+
     // Handle events
+    const handleLogout = () => {
+      localStorage.removeItem("loginData");
+      navigate("/login");
+      toastSuccess("You have been logged out.");
+    }
+
     const handleSelectedUser = (user) => {
       setSelectedUser(user.email)
       setReceiverId(user.id);
-      setReceiverClass("User");
     }
 
     const handleSenderInput = (e) => {
@@ -84,16 +133,23 @@ export function RoomPage() {
         console.error('Error sending:', error);
         toastError('Error sending message.');
       }
+
+      try {
+        await getReceiverMessageData(receiverUrl, receiverOptions);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+        toastError('Error fetching messages.');
+      }
     }
 
 
 
     return (
     <main className="h-screen w-full flex">
-        <section className="min-w-[24rem] flex flex-col justify-between bg-white">
+        <section className="min-w-[24rem] flex flex-col justify-between bg-white border-r">
             <RoomNav activeTab={activeTab} setActiveTab={setActiveTab} />
             {renderContent()}
-            <RoomFooter />
+            <RoomFooter handleLogout={handleLogout}/>
         </section>
         {!receiverId ? (
           <p>Create a room or Select an existing message to get started</p>
@@ -102,7 +158,12 @@ export function RoomPage() {
             <RoomHeader
               selectedUser={selectedUser}
             />
-            <RoomConversation />
+            <RoomConversation
+              receiverMessageData={receiverMessageData}
+              receiverId={receiverId}
+              senderId={senderId}
+              messagesEndRef={messagesEndRef}
+            />
             <RoomText
               sendInput={sendInput}
               handleSenderInput={handleSenderInput}

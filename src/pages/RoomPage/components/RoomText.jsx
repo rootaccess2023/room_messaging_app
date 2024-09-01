@@ -1,6 +1,7 @@
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons/faPaperPlane";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from 'prop-types';
 
 export function RoomText({sendInput, handleSenderInput, handleSubmit}) {
 
@@ -28,4 +29,10 @@ export function RoomText({sendInput, handleSenderInput, handleSubmit}) {
         />
     </section>
   )
+}
+
+RoomText.propTypes = {
+    sendInput: PropTypes.func,
+    handleSenderInput: PropTypes.func,
+    handleSubmit: PropTypes.func
 }
