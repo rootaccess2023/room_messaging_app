@@ -75,7 +75,7 @@ export function LoginPage() {
                     style="absolute right-28 bottom-8"
                     question="Not yet a member?"
                     answer="Signup"
-                    link="/signup"
+                    link="/sign_up"
                 />
             </form>
         </div>
