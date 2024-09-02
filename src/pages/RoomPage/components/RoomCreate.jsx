@@ -1,36 +1,10 @@
-import { useState } from 'react';
 import { toastError, toastSuccess } from '../../../utils/toaster';
 import { createChannel } from '../../../utils/api';
 import { ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faList, faEnvelope, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-export function RoomCreate({ allUsers }) {
-  const [name, setName] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [roomMember, setRoomMember] = useState([]);
-
-  // Handle room name input change
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Handle adding a user to the room
-  const handleAddMember = (user) => {
-    if (!roomMember.some((member) => member.id === user.id)) {
-      setRoomMember([...roomMember, user]); // Add user to roomMember state
-    }
-  };
-
-  // Handle removing a user from the room
-  const handleRemoveMember = (userId) => {
-    setRoomMember(roomMember.filter((member) => member.id !== userId)); // Remove user by id
-  };
+export function RoomCreate({ allUsers, handleChange, handleAddMember, handleRemoveMember, handleSearchChange, searchTerm, roomMember, name, refreshChannels}) {
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -52,6 +26,7 @@ export function RoomCreate({ allUsers }) {
         toastSuccess('Channel created successfully!');
         setName('');
         setRoomMember([]);
+        refreshChannels();
       } else {
         toastError('Failed to create channel.');
       }
@@ -66,27 +41,27 @@ export function RoomCreate({ allUsers }) {
   );
 
   return (
-    <div className='h-[calc(100%_-_243.6px)] overflow-scroll p-4'>
+    <div className='h-[calc(100%_-_243.6px) p-4'>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-        <input
-          type="text"
-          placeholder="Room Name"
-          value={name}
-          onChange={handleChange}
-          className="border p-2 rounded"
-        />
-        <input
+          <input
             type="text"
-            placeholder="Search User"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="w-full border p-2 rounded"
-        />
-        <div className='h-44 border-t border-b overflow-scroll'>
+            placeholder="Room Name"
+            value={name}
+            onChange={handleChange}
+            className="border p-2 rounded"
+          />
+          <input
+              type="text"
+              placeholder="Search user and click to add member"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="w-full border p-2 rounded"
+          />
+        <div className='h-[calc(100vh_-_555px)] border-t border-b overflow-scroll'>
           {filteredUsers.map(user => (
-            <ul key={user.id}>
+            <ul className='' key={user.id}>
               <li
-                className='border-b py-2 cursor-pointer hover:bg-gray-100' 
+                className='border-b py-2 cursor-pointer hover:bg-gray-100'
                 onClick={() => handleAddMember(user)}
               >
                 <FontAwesomeIcon className='pr-2 text-blue-500' icon={faEnvelope} />
@@ -99,10 +74,10 @@ export function RoomCreate({ allUsers }) {
           {roomMember.map(member => (
             <div key={member.id} className="flex items-center justify-between bg-gray-200 p-2 rounded mb-1">
               <span>{member.email}</span>
-              <FontAwesomeIcon 
-                className='text-red-500 cursor-pointer' 
-                icon={faTimes} 
-                onClick={() => handleRemoveMember(member.id)} 
+              <FontAwesomeIcon
+                className='text-red-500 cursor-pointer'
+                icon={faTimes}
+                onClick={() => handleRemoveMember(member.id)}
               />
             </div>
           ))}

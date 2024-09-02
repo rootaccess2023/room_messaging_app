@@ -33,6 +33,9 @@ export function RoomPage() {
   const [sendInput, setSendInput] = useState("");
   const [roomCount, setRoomCount] = useState("");
   const [allUsers, setAllUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [roomMember, setRoomMember] = useState([]);
+  const [name, setName] = useState('');
 
   // useRef
   const messagesEndRef = useRef(null);
@@ -60,6 +63,16 @@ export function RoomPage() {
     getData: getReceiverMessageData,
   } = useFetch();
   const { data: userData, error: userError, getData: getUserData } = useFetch();
+  const refreshChannels = async () => {
+    try {
+      const { apiURL: allChannelUrl, options: allChannelOptions } =
+        getAllChannels();
+      await getAllRoom(allChannelUrl, allChannelOptions);
+    } catch (error) {
+      console.error("Error refreshing all channel data:", error);
+      toastError("Error refreshing channel list.");
+    }
+  };
 
   // useEffect
   useEffect(() => {
@@ -112,7 +125,11 @@ export function RoomPage() {
   }, [receiverMessageData, receiverMessageError]);
 
   useEffect(() => {
-    setRoomCount(allChannels.length);
+    if (!allChannels) {
+      setRoomCount(0);
+    } else {
+      setRoomCount(allChannels.length);
+    }
   }, [allChannels]);
 
   useEffect(() => {
@@ -141,16 +158,25 @@ export function RoomPage() {
         return (
           <RoomRooms
             handleSelectedUser={handleSelectedUser}
-            allChannels={allChannels}
+            allChannels={allChannels || []}
           />
         );
       case "Create":
-        return <RoomCreate allUsers={allUsers} />;
+        return <RoomCreate
+          allUsers={allUsers}
+          handleChange={handleChange}
+          handleAddMember={handleAddMember}
+          handleRemoveMember={handleRemoveMember}
+          handleSearchChange={handleSearchChange}
+          searchTerm={searchTerm}
+          roomMember={roomMember}
+          name={name}
+          />;
       default:
         return (
           <RoomRooms
             handleSelectedUser={handleSelectedUser}
-            allChannels={allChannels}
+            allChannels={allChannel}
           />
         );
     }
@@ -185,6 +211,28 @@ export function RoomPage() {
 
   const handleSenderInput = (e) => {
     setSendInput(e.target.value);
+  };
+
+   // Handle room name input change
+   const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Handle adding a user to the room
+  const handleAddMember = (user) => {
+    if (!roomMember.some((member) => member.id === user.id)) {
+      setRoomMember([...roomMember, user]);
+    }
+  };
+
+  // Handle removing a user from the room
+  const handleRemoveMember = (userId) => {
+    setRoomMember(roomMember.filter((member) => member.id !== userId));
   };
 
   const handleSubmit = async (e) => {

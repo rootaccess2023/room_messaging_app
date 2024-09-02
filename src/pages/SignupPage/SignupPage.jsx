@@ -44,7 +44,7 @@ export function SignupPage() {
                     password: "",
                     password_confirmation: ""
                 })
-                navigate("/room")
+                navigate("/login")
             } else {
                 throw new Error('Registration failed.');
             }
